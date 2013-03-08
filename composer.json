@@ -1,0 +1,18 @@
+{
+    "require": {
+        "php": ">=5.3.3",
+        "silex/silex": "1.0.*",
+        "twig/twig": "~1.11",
+        "doctrine/dbal": "~2.3",
+        "symfony/console": "~2.2",
+        "symfony/twig-bridge": "~2.2",
+        "symfony/form": "~2.2",
+        "symfony/validator": "~2.2",
+        "symfony/config": "~2.2",
+        "symfony/translation": "~2.2"
+    },
+    "autoload": {
+        "psr-0": { "": "src/" }
+    },
+    "minimum-stability": "dev"
+}

@@ -1,0 +1,9 @@
+/phpunit.xml
+/vendor
+/build
+/app/cache
+/app/logs
+/composer.lock
+/.buildpath
+/.settings
+/.project
