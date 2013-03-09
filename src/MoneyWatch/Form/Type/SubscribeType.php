@@ -23,7 +23,7 @@ class SubscribeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('currency', 'choice', array('choices' => $options['choices']))
+            ->add('currency', 'choice', array('choices' => $options['currency'], 'empty_value' => 'Select currency'))
             ->add('email', 'email', array('attr' => array('placeholder' => 'Type in your email')))
             ->add('comparison', 'choice', array('choices' => array(
                 '' => 'Daily updates',
@@ -45,7 +45,7 @@ class SubscribeType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'MoneyWatch\\Form\\Model\\Subscription',
             'service' => 'currency_manager',
-            'choices' => function(Options $options) use ($container) {
+            'currency' => function(Options $options) use ($container) {
                 $result = $container[$options['service']]->findAll();
 
                 return array_combine($result, $result);

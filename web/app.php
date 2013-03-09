@@ -18,8 +18,11 @@ $app->match('/', function (Request $request) use ($app) {
     if ($request->isMethod('POST')) {
         if ($form->bind($request)->isValid()) {
             $app['subscription_manager']->subscribe($form->getData());
+            $app['session']->getFlashBag()->set('success', 'Subscription successfully created!');
 
             return new RedirectResponse('/');
+        } else {
+            $app['session']->getFlashBag()->set('error', 'Please, correct the following errors.');
         }
     } else {
         $form->setData(new Subscription($app['options']['default_currency']));
