@@ -17,6 +17,45 @@ class CurrencyManager
     }
 
     /**
+     * @param array $data
+     *
+     * @return number
+     */
+    public function load(array $data)
+    {
+        $total = 0;
+
+        $this->db->transactional(function (Connection $db) use ($data, &$total) {
+            foreach ($data as $code => $enabled) {
+                if ($enabled) {
+                    $db->insert('currency', array('code' => $code));
+                    $total++;
+                }
+            }
+        });
+
+        return $total;
+    }
+
+    /**
+     * @param array  $data
+     * @param string $date
+     *
+     * @return number
+     */
+    public function loadExchangeData(array $data, $date)
+    {
+        $this->db->transactional(function (Connection $db) use ($data, $date) {
+            $query = 'REPLACE INTO currency_exchange (code, date_posted, rate) VALUES (?, ?, ?)';
+            foreach ($data as $code => $rate) {
+                $db->executeQuery($query, array($code, $date, $rate));
+            }
+        });
+
+        return count($data);
+    }
+
+    /**
      * @return array
      */
     public function findAll()

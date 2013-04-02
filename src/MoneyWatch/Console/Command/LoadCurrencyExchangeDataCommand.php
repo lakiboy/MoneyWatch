@@ -33,18 +33,10 @@ class LoadCurrencyExchangeDataCommand extends Command
             return $output->writeln(sprintf('<error>Unable to read data for "%s"</error>', $date));
         }
 
-        $data = $data[$date];
-        $container = $this->getHelper('kernel')->getKernel();
+        $app = $this->getHelper('kernel')->getKernel();
+        $total = $app['currency_manager']->loadExchangeData($data[$date], $date);
 
-        // Load all data in one transaction.
-        $container['db']->transactional(function ($db) use ($data, $date) {
-            $query = 'REPLACE INTO currency_exchange (code, date_posted, rate) VALUES (?, ?, ?)';
-            foreach ($data as $code => $rate) {
-                $db->executeQuery($query, array($code, $date, $rate));
-            }
-        });
-
-        $output->writeln(sprintf('Done! <info>%d</info> items imported.', count($data)));
+        $output->writeln(sprintf('Done! <info>%d</info> items imported.', $total));
     }
 
     /**
@@ -54,9 +46,9 @@ class LoadCurrencyExchangeDataCommand extends Command
      */
     private function readData()
     {
-        $container = $this->getHelper('kernel')->getKernel();
-        $rssReader = new RssReader($container['options']['rss_url']);
+        $app = $this->getHelper('kernel')->getKernel();
+        $reader = new RssReader($app['options']['rss_url']);
 
-        return $rssReader->parse();
+        return $reader->parse();
     }
 }
