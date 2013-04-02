@@ -20,4 +20,12 @@ CREATE TABLE `subscription` (
   KEY `currency` (`currency`),
   FOREIGN KEY (`currency`) REFERENCES `currency` (`code`) ON DELETE CASCADE,
   FOREIGN KEY (`email`) REFERENCES `email` (`email`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `currency_exchange` (
+  `code` char(3) NOT NULL,
+  `date_posted` date NOT NULL,
+  `rate` decimal(12,8) NOT NULL,
+  PRIMARY KEY (`code`,`date_posted`),
+  FOREIGN KEY (`code`) REFERENCES `currency` (`code`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
