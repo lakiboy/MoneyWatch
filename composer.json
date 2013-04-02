@@ -1,7 +1,7 @@
 {
     "require": {
         "php": ">=5.3.3",
-        "silex/silex": "1.0.*",
+        "silex/silex": "1.0.*@dev",
         "twig/twig": "~1.11",
         "doctrine/dbal": "~2.3",
         "symfony/console": "~2.2",
