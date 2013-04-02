@@ -25,7 +25,7 @@ class SubscribeType extends AbstractType
         $builder
             ->add('currency', 'choice', array('choices' => $options['currency'], 'empty_value' => 'Select currency'))
             ->add('email', 'email', array('attr' => array('placeholder' => 'Type in your email')))
-            ->add('comparison', 'choice', array('choices' => array(
+            ->add('comparison', 'choice', array('required' => false, 'choices' => array(
                 '' => 'Daily updates',
                 Comparison::EQ => 'Equal to',
                 Comparison::GT => 'Greater than',
