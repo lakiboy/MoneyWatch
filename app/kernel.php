@@ -1,6 +1,7 @@
 <?php
 
 use MoneyWatch\Provider\ManagerServiceProvider;
+use Silex\Provider\SwiftmailerServiceProvider;
 use Silex\Provider\TranslationServiceProvider;
 use Silex\Provider\SessionServiceProvider;
 use Silex\Provider\ValidatorServiceProvider;
@@ -29,6 +30,11 @@ $app->register(new TranslationServiceProvider(), array(
 $app->register(new ValidatorServiceProvider());
 $app->register(new SessionServiceProvider());
 $app->register(new ManagerServiceProvider());
+$app->register(new SwiftmailerServiceProvider(), array(
+    'swiftmailer.transport' => $app->share(function() {
+        return new Swift_Transport_MailTransport(new Swift_Transport_SimpleMailInvoker(), new Swift_Events_SimpleEventDispatcher());
+    })
+));
 
 $app['currency'] = $config['currency'];
 $app['options'] = $config['app'];

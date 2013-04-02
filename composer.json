@@ -9,10 +9,11 @@
         "symfony/form": "~2.2",
         "symfony/validator": "~2.2",
         "symfony/config": "~2.2",
-        "symfony/translation": "~2.2"
+        "symfony/translation": "~2.2",
+        "swiftmailer/swiftmailer": ">=4.1.2,<4.2-dev"
     },
     "autoload": {
         "psr-0": { "": "src/" }
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "stable"
 }

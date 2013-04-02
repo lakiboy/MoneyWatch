@@ -2,6 +2,7 @@
 
 namespace MoneyWatch\Console\Command;
 
+use MoneyWatch\Mailer;
 use MoneyWatch\RuleMatcher;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -42,5 +43,20 @@ class NotifySubscriberCommand extends Command
         }
 
         $output->writeln(sprintf('Matches found: <info>%d</info>; subscriber: <comment>%s</comment>', count($matches), $email));
+
+        $params = array(
+            'from_email' => $app['options']['mailer_from_email'],
+            'from_name' => $app['options']['mailer_from_name'],
+            'subject' => $app['options']['mailer_subject'],
+            'to_email' => $email
+        );
+        $mailer = new Mailer($app['mailer'], $app['twig']);
+        $result = $mailer->send($params, array('matches' => $matches, 'date' => new \DateTime));
+
+        if ($result) {
+            $output->writeln('<comment>Notification sent</comment>');
+        } else {
+            $output->writeln('<error>Failed sending notification</error>');
+        }
     }
 }

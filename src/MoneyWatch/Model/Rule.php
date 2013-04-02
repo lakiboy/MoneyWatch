@@ -30,6 +30,16 @@ class Rule
         return $this->comparison ? false : true;
     }
 
+    public function getValue()
+    {
+        return $this->value;
+    }
+
+    public function getComparison()
+    {
+        return $this->comparison;
+    }
+
     /**
      * @param string $rule
      *

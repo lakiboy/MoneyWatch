@@ -1,0 +1,17 @@
+Hello subscriber!
+
+MoneyWatch update for {{ date | date('d/m/Y') }} matching your criteria:
+
+{% for match in matches %}
+    {{ loop.index }}) {{ match.currencyCode }} {{ match.exchangeValue }}
+
+    {%- if match.dailyUpdate %}
+ ~ daily update
+    {%- else %}
+ {{ match.comparison | raw }} {{ match.compareRate }}
+    {%- endif %}
+
+{% endfor %}
+
+--
+MoneyWatch

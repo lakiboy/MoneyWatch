@@ -20,7 +20,7 @@ class RuleMatch
     /**
      * @return number
      */
-    public function getExchnageValue()
+    public function getExchangeValue()
     {
         return $this->rate->getValue();
     }
@@ -49,5 +49,15 @@ class RuleMatch
     public function isRule($rule)
     {
         return $this->rule->isRule($rule);
+    }
+
+    public function getCompareRate()
+    {
+        return $this->rule->getValue();
+    }
+
+    public function getComparison()
+    {
+        return $this->rule->getComparison();
     }
 }
