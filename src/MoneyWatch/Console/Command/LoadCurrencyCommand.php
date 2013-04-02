@@ -22,7 +22,7 @@ class LoadCurrencyCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $app = $this->getHelper('kernel')->getKernel();
-        $total = $app['currency_manager']->load($kernel['currency']);
+        $total = $app['currency_manager']->load($app['currency']);
         $output->writeln(sprintf('Done! <info>%d</info> items imported.', $total));
     }
 }
