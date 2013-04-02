@@ -2,6 +2,9 @@
 
 namespace MoneyWatch\Model;
 
+/**
+ * Available compare methods.
+ */
 final class Comparison
 {
     const EQ  = '=';

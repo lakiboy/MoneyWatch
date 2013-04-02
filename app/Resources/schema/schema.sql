@@ -13,7 +13,7 @@ CREATE TABLE `subscription` (
   `email` varchar(255) NOT NULL,
   `currency` char(3) NOT NULL,
   `comparison` varchar(8) DEFAULT NULL,
-  `value` decimal(12,2) DEFAULT NULL,
+  `value` decimal(12,8) DEFAULT NULL,
   `date_created` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `email` (`email`),

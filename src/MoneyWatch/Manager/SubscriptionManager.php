@@ -2,6 +2,7 @@
 
 namespace MoneyWatch\Manager;
 
+use MoneyWatch\Model\Rule;
 use MoneyWatch\Form\Model\Subscription;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Types\Type;
@@ -16,6 +17,18 @@ class SubscriptionManager
     public function __construct(Connection $db)
     {
         $this->db = $db;
+    }
+
+    /**
+     * @param string $email
+     *
+     * @return boolean
+     */
+    public function hasSubscriber($email)
+    {
+        $result = $this->db->fetchColumn('SELECT email FROM subscription WHERE email = ?', array($email));
+
+        return $result !== false ? true : false;
     }
 
     /**
@@ -34,6 +47,29 @@ class SubscriptionManager
             'value' => $data->getValue() ?: null,
             'date_created' => date('Y-m-d H:i:s')
         ));
+    }
+
+    /**
+     * @param string $email
+     *
+     * @return array
+     */
+    public function getRulesBySubsciber($email)
+    {
+        $query = '
+            SELECT   currency, comparison, value
+            FROM     subscription
+            WHERE    email = ?
+            ORDER BY date_created ASC
+        ';
+        $data = $this->db->fetchAll($query, array($email));
+
+        $rules = array();
+        foreach ($data as $item) {
+            $rules[] = new Rule($item['currency'], $item['comparison'], $item['value']);
+        }
+
+        return $rules;
     }
 
     /**
