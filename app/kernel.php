@@ -31,8 +31,8 @@ $app->register(new ValidatorServiceProvider());
 $app->register(new SessionServiceProvider());
 $app->register(new ManagerServiceProvider());
 $app->register(new SwiftmailerServiceProvider(), array(
-    'swiftmailer.transport' => $app->share(function() {
-        return new Swift_Transport_MailTransport(new Swift_Transport_SimpleMailInvoker(), new Swift_Events_SimpleEventDispatcher());
+    'swiftmailer.transport' => $app->share(function() use ($app) {
+        return new Swift_Transport_MailTransport(new Swift_Transport_SimpleMailInvoker(), $app['swiftmailer.transport.eventdispatcher']);
     })
 ));
 

@@ -58,5 +58,8 @@ class NotifySubscriberCommand extends Command
         } else {
             $output->writeln('<error>Failed sending notification</error>');
         }
+
+        // Flush queue.
+        $app['swiftmailer.spool']->flushQueue($app['swiftmailer.transport']);
     }
 }
