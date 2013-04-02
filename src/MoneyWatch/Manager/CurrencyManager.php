@@ -2,6 +2,7 @@
 
 namespace MoneyWatch\Manager;
 
+use MoneyWatch\Model\Rate;
 use Doctrine\DBAL\Connection;
 
 class CurrencyManager
@@ -53,6 +54,24 @@ class CurrencyManager
         });
 
         return count($data);
+    }
+
+    /**
+     * @param string|\DateTime $date
+     *
+     * @return array
+     */
+    public function findExchangeRatesByDate($date)
+    {
+        $date = $date instanceof \DateTime ? $date->format('Y-m-d') : $date;
+        $data = $this->db->fetchAll('SELECT code, rate FROM currency_exchange WHERE date_posted = ?', array($date));
+
+        $result = array();
+        foreach ($data as $item) {
+            $result[$item['code']] = new Rate($item['code'], $item['rate']);
+        }
+
+        return $result;
     }
 
     /**
