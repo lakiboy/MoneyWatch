@@ -25,7 +25,7 @@ class Mailer
             ->setFrom($params['from_email'], $params['from_name'])
             ->setTo($params['to_email'])
             ->setSubject($params['subject'])
-            ->setBody($body = $this->templating->render('email.html.twig', $vars));
+            ->setBody($this->templating->render('email.html.twig', $vars));
         ;
 
         return (boolean) $this->mailer->send($message);
